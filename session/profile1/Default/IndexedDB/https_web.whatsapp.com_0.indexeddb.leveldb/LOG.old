@@ -1,0 +1,24 @@
+2024/05/03-03:15:57.737 8307 Reusing MANIFEST /Users/panu/my_practice/whtsp_spam/session/profile1/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/05/03-03:15:57.737 8307 Recovering log #87
+2024/05/03-03:15:57.740 8307 Reusing old log /Users/panu/my_practice/whtsp_spam/session/profile1/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000087.log 
+2024/05/03-03:15:57.945 8307 Level-0 table #93: started
+2024/05/03-03:15:57.952 8307 Level-0 table #93: 83023 bytes OK
+2024/05/03-03:15:57.958 8307 Delete type=0 #87
+2024/05/03-03:15:57.958 8307 Manual compaction at level-0 from '\x00,\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00-\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/05/03-03:15:57.959 8307 Level-0 table #95: started
+2024/05/03-03:15:57.962 8307 Level-0 table #95: 754 bytes OK
+2024/05/03-03:15:57.969 8307 Delete type=0 #92
+2024/05/03-03:15:57.969 8307 Manual compaction at level-0 from '\x00-\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00.\x00\x00\x00' @ 0 : 0; will stop at '\x00-\x00\x00\x05' @ 88640 : 0
+2024/05/03-03:15:57.969 8307 Compacting 1@0 + 1@1 files
+2024/05/03-03:15:57.974 8307 Generated table #96@0: 2388 keys, 51801 bytes
+2024/05/03-03:15:57.974 8307 Compacted 1@0 + 1@1 files => 51801 bytes
+2024/05/03-03:15:57.978 8307 compacted to: files[ 0 1 1 0 0 0 0 ]
+2024/05/03-03:15:57.978 8307 Delete type=2 #95
+2024/05/03-03:15:57.979 8307 Manual compaction at level-0 from '\x00-\x00\x00\x05' @ 88640 : 0 .. '\x00.\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/05/03-03:15:58.874 a303 Compacting 1@1 + 1@2 files
+2024/05/03-03:15:58.891 a303 Generated table #97@1: 19458 keys, 630237 bytes
+2024/05/03-03:15:58.891 a303 Compacted 1@1 + 1@2 files => 630237 bytes
+2024/05/03-03:15:58.895 a303 compacted to: files[ 0 0 1 0 0 0 0 ]
+2024/05/03-03:15:58.895 a303 Delete type=2 #96
+2024/05/03-03:15:58.895 a303 Delete type=2 #93
+2024/05/03-03:15:58.895 a303 Delete type=2 #90
