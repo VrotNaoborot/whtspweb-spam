@@ -124,9 +124,8 @@ def open_and_spam(name_profile: str, list_numbers: list) -> None:
             print(f"Ошибка отправки на номер: {number}. {ex}")
 
 
-# clear_session_folder()
+clear_session_folder()
 # create_profile(1)
-open_and_spam("profile1", ["+79998616672", "+79877184810"])
 # append_profiles()
 
 # clear_session_folder()
