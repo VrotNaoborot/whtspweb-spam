@@ -1,16 +1,12 @@
 import time
-import fake_useragent
 import os
 from selenium import webdriver
-from selenium.webdriver.common import actions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
 from urllib.parse import quote
-
-from pyautogui import press
+import multiprocessing
 import shutil
 
 project_path = os.getcwd()
@@ -18,7 +14,6 @@ session_folder_path = os.path.join(project_path, "session")
 
 message = "🫣"
 encoded_message = quote(message.encode("utf-8"))
-
 
 SECONDS_WAIT_FOR_USER_AUTHORIZADE = 300
 WHATSAPP_URL = "https://web.whatsapp.com/"
@@ -91,20 +86,6 @@ def append_profiles() -> None:
         create_profile(i)
 
 
-def change_profiles():
-    while True:
-        action = input(
-            f"[+] Введите 1, если необходимо удалить все профили и добавить новые\nВведите 2 для добавления к существующим")
-        if action not in {"1", "2"}:
-            print("[+] Неправильное значение")
-            continue
-        break
-
-    if action == "1":
-        clear_session_folder()
-    append_profiles()
-
-
 def open_and_spam(name_profile: str, list_numbers: list) -> None:
     """Открывает профиль и делает рассылку по list_numbers"""
     profile = webdriver.ChromeOptions()
@@ -124,8 +105,64 @@ def open_and_spam(name_profile: str, list_numbers: list) -> None:
             print(f"Ошибка отправки на номер: {number}. {ex}")
 
 
-clear_session_folder()
-# create_profile(1)
-# append_profiles()
+def numbers() -> list:
+    """Открывает файл с номерами и парсит их"""
+    with open("target_numbers.txt", "r", encoding="utf8") as f:
+        numbers_data = [i.strip() for i in f.readlines() if i != "\n"]
+        return numbers_data
 
-# clear_session_folder()
+
+def get_number_for_spam(target_numbers: list, count_profiles: int) -> list:
+    """Возвращает номера для одного профиля, исходя из количества доступных профилей"""
+    count_numbers_for_profile = len(target_numbers) // count_profiles
+    cursor = 0
+    while cursor < len(target_numbers):
+        yield target_numbers[cursor:cursor + count_numbers_for_profile + 1]
+        cursor += count_numbers_for_profile
+
+
+def start_spam():
+    data_targets = numbers()
+    data_session = os.listdir(session_folder_path)
+    if not len(data_targets):
+        print("[+] Необходимо заполнить файл target_numbers.")
+        return -1
+    if not len(data_session):
+        print("[+] Необходимо добавить сессии.")
+        return -1
+    i = get_number_for_spam(data_targets, len(data_session))
+    processes = []
+    for session in data_session:
+        p = multiprocessing.Process(target=open_and_spam, args=(session, next(i)))
+        processes.append(p)
+        p.start()
+
+    for p in processes:
+        p.join()
+    else:
+        print("[+] Все аккаунты успешно завершили свою работу.")
+
+
+def main() -> None:
+    while True:
+        action = input(
+            f"""Меню:
+1. Необходимо удалить все профили и добавить новые.
+2. Добавить к существующим.
+3. Запустить спам.\n""")
+        if action not in {"1", "2", "3"}:
+            print("[+] Неправильное значение")
+            continue
+        break
+
+    if action == "1":
+        clear_session_folder()
+        append_profiles()
+    elif action == "2":
+        append_profiles()
+    elif action == "3":
+        start_spam()
+
+
+if __name__ == "__main__":
+    main()
