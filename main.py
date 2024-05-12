@@ -8,6 +8,8 @@ from selenium.webdriver.common.keys import Keys
 from urllib.parse import quote
 import multiprocessing
 import shutil
+import math
+
 
 project_path = os.getcwd()
 session_folder_path = os.path.join(project_path, "session")
@@ -114,7 +116,7 @@ def numbers() -> list:
 
 def get_number_for_spam(target_numbers: list, count_profiles: int) -> list:
     """Возвращает номера для одного профиля, исходя из количества доступных профилей"""
-    count_numbers_for_profile = len(target_numbers) // count_profiles
+    count_numbers_for_profile = math.ceil(len(target_numbers) // count_profiles)
     cursor = 0
     while cursor < len(target_numbers):
         yield target_numbers[cursor:cursor + count_numbers_for_profile + 1]
@@ -147,22 +149,26 @@ def main() -> None:
     while True:
         action = input(
             f"""Меню:
-1. Необходимо удалить все профили и добавить новые.
-2. Добавить к существующим.
-3. Запустить спам.\n""")
-        if action not in {"1", "2", "3"}:
-            print("[+] Неправильное значение. Выбери 1-3")
+1. Необходимо удалить все профили.
+2. Добавить профили.
+3. Запустить спам.
+4. Закрыть приложение.\n""")
+        if action not in {"1", "2", "3", "4"}:
+            print("[+] Неправильное значение. Выбери 1-4")
             continue
-        break
 
-    if action == "1":
-        clear_session_folder()
-        append_profiles()
-    elif action == "2":
-        append_profiles()
-    elif action == "3":
-        start_spam()
+        if action == "1":
+            clear_session_folder()
+        elif action == "2":
+            append_profiles()
+        elif action == "3":
+            start_spam()
+        elif action == "4":
+            break
+    exit()
 
 
 if __name__ == "__main__":
     main()
+
+
